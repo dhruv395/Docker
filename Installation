@@ -1,0 +1,76 @@
+Install Docker in Rhel7: 
+
+Go to get.docker.com 
+install docker by scripting  
+
+ Or go to,  
+
+https://docs.docker.com/install/linux/docker-ce/centos/ 
+#yum install -y yum-utils device-mapper-persistent-data lvm2 
+
+storage driver package. This will allow to communicate docker with storage devices 
+#yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo 
+yum install docker-ce docker-ce-cli containerd.io 
+
+ 
+If you get an error then run 
+#yum install --setopt=obsoletes=0 \ 
+
+   docker-ce-17.03.2.ce-1.el7.centos.x86_64 \ 
+
+   docker-ce-selinux-17.03.2.ce-1.el7.centos.noarch 
+
+on a new system with yum repo defined, forcing older version and ignoring obsoletes introduced by 17.06.0 
+
+OR 
+Installing the Selinux from the Centos repository worked for me:  
+
+ 1. Go to http://mirror.centos.org/centos/7/extras/x86_64/Packages/  
+2. Find the latest version for container-selinux i.e. container-selinux-2.21-1.el7.noarch.rpm  
+3. Run the following command on your terminal:  
+
+$sudo yum install -y http://mirror.centos.org/centos/7/extras/x86_64/Packages/**Add_current_container-selinux_package_here** 
+ #yum makecache fast 
+
+ To refresh packages 
+#docker version 
+#systemctl status docker  
+#systemctl start docker 
+#docker run hello-word 
+
+ To verify installation  
+docker info 
+check info details 
+sudo groupadd docker 
+sudo usermod -aG docker $USER 
+
+ 
+Docker is a containerization platform which packages your application and all it's dependencies together in the form of containers  
+so as to ensure that your application works seamlessly in any environment be it dev, test or prod. 
+
+ Dockerfile> Images> container 
+
+ Dockerfile: 
+A text file with instructions to build image. Automation of Docker Image Creation. 
+
+How to create Dockerfile? 
+Step 1 : Create a file named Dockerfile 
+Step 2 : Add instructions in Dockerfile 
+Step 3 : Build dockerfile to create image 
+Step 4 : Run image to create container 
+
+COMMANDS: 
+docker build  
+docker build -t ImageName:Tag directoryOfDocekrfile 
+docker run image	 
+
+ 
+What are Images?  
+
+In Docker, everything is based on Images. An image is a combination of a file system and parameters. 
+Docker Images are templates used to create Docker containers. An image is binaries, libraries and source code that all make a 
+application or it's a application we want to run. Can be stored locally or remote Registries (e.g. docker hub). 
+The run command is used to mention that we want to create an instance of an image, which is then called a container. 
+
+ Container: 
+Container is a running instance of image. 

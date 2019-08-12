@@ -66,10 +66,12 @@ docker run image
 
  
 What are Images?  
-
-In Docker, everything is based on Images. An image is a combination of a file system and parameters. 
-Docker Images are templates used to create Docker containers. An image is binaries, libraries and source code that all make a 
-application or it's a application we want to run. Can be stored locally or remote Registries (e.g. docker hub). 
+In Docker, everything is based on Images. Docker Images are templates used to create Docker containers.  
+An image is binaries, libraries and source code that all make a application or it's a application we want to run.  
+ or 
+An image is an executable package that includes everything needed to run an application--the code, a runtime, libraries, environment  
+variables, and configuration files. 
+Can be stored locally or remote Registries (e.g. docker hub). 
 The run command is used to mention that we want to create an instance of an image, which is then called a container. 
 
  Container: 

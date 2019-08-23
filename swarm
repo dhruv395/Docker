@@ -45,14 +45,14 @@ Step 3 :  SSH (connect) to docker machine
     docker-machine ssh manager1
 
 
-Step 4 :  Initialize Docker Swarm    docker swarm init --advertise-addr MANAGER_IP
+Step 4 :  Initialize Docker Swarm | to enable swarm mode and make your current machine a swarm manager 
+    docker swarm init --advertise-addr MANAGER_IP
     docker node ls
     (this command will work only in swarm manager and not in worker)
 
 
 Step 5 :  Join workers in the swarm
-    Get command for joining as worker
-    In manager node run command
+    Get command for joining as worker | In manager node run command,
     docker swarm join-token worker
     This will give command to join swarm as worker
 
@@ -60,16 +60,15 @@ Step 5 :  Join workers in the swarm
     This will give command to join swarm as manager
 
     SSH into worker node (machine) and run command to join swarm as worker
-   
-    In Manager Run command - docker node ls to verify worker is registered and is ready
+   In Manager Run command - 
+    docker node ls                  ## to verify worker is registered and is ready
   
     Do this for all worker machines
 
 
 Step 6 :  On manager run standard docker commands
     docker info
-    check the swarm section 
-    no of manager, nodes etc
+    check the swarm section, no of manager, nodes etc
 
     Now check docker swarm command options 
     docker swarm 

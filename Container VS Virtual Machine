@@ -1,0 +1,11 @@
+Container VS Virtual Machine
+• Containers aren’t Mini-VM’s
+• They are just processes
+• Limited to what resources they can access (file paths, network
+devices, running processes)
+• Exit when process stops
+• docker run --name mongo -d mongo
+• docker top mongo
+• ps aux
+• docker stop mongo
+• ps aux

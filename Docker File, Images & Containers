@@ -1,3 +1,13 @@
+Image vs. Container
+• An Image is the application we want to run
+• A Container is an instance of that image running as a process
+• You can have many containers running off the same image
+• In this lecture our image will be the Nginx web server
+• Docker's default image "registry" is called Docker Hub
+(hub.docker.com)
+
+
+
 docker build --tag=friendlyhello .          ### build a docker image from docker file in machine’s local Docker image registry:
 docker images                               ## check docker images
 

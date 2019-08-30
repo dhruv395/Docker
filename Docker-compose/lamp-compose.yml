@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+        php-apache:
+                image: php:7.2.1-apache
+                ports:
+                        - '80:80'
+                volumes:
+                        - ./documentroot:/var/www/html
+                links:
+                        - 'mariadb'
+        mariadb:
+                image: mariadb:10.1
+                volumes:
+                        - db-data:/var/lib/mysql
+                environment:
+                        MYSQL_ROOT_PASSWORD: "rootpwd"
+                        MYSQL_USER: "testuser"
+                        MYSQL_PASSWORD: "testpwd"
+                        MYSQL_DATABASE: "testdb"
+volumes:
+        db-data:
+
+############ save and exit
+mkdir docuemtnroot && cd docuemtnroot
+echo "<?php phpinfo(); ?>" | sudo tee /var/www/html/info.php

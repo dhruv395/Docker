@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  amazon-tomcat-server:
+    image: tomcat:8.5.34
+    restart: always
+    container_name: amazon-tomcat-server
+    ports:
+      - 8443:8443
+    volumes:
+      - ${PWD}/configurations/setenv.sh:/usr/local/tomcat/bin/setenv.sh
+      - ${PWD}/configurations/server.xml:/usr/local/tomcat/conf/server.xml
+      - ${PWD}/configurations/tomcat.keystore:/usr/local/tomcat/conf/tomcat.keystore
+      - ${PWD}/configurations/web.xml:/usr/local/tomcat/conf/web.xml
+      - ${PWD}/webapps/:/usr/local/tomcat/webapps/
+      - ${PWD}/app-properties/:/usr/local/tomcat/app-properties
+      - ${PWD}/logs/:/usr/local/tomcat/logs/
+      - ${PWD}/questionnaire/:/home/ubuntu/questionnaire/
+      - ${PWD}/OutputDatacuts/:/home/ubuntu/OutputDatacuts/
+    network_mode: "host"

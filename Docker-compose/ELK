@@ -1,0 +1,57 @@
+version: '2.2'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.3
+    container_name: elasticsearch
+    restart: always
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms4g -Xmx4g"
+      - "discovery.type=single-node"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:6.8.3
+    container_name: logstash
+    restart: always
+    environment:
+      - "LS_JAVA_OPTS=-Xms4g -Xmx4g"
+      - "XPACK_MONITORING_ENABLED=true"
+      - "PIPELINE_WORKERS=12"
+      - "PIPELINE_BATCH_SIZE=500"
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline/
+      - ./logstash/templates:/usr/share/logstash/templates/
+      - logstash:/usr/share/logstash/data
+    ports:
+      - 5044:5044
+      - 9600:9600
+    links:
+      - elasticsearch
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.8.3
+    container_name: kibana
+    restart: always
+    ports:
+      - 5601:5601
+    environment:
+      - "XPACK_MONITORING_ENABLED=true"
+      - "XPACK_MONITORING_KIBANA_COLLECTION_ENABLED=false"
+      - "XPACK_TELEMETRY_ENABLED=false"
+    links:
+      - elasticsearch
+
+volumes:
+   elasticsearch:
+       driver: local
+   logstash:
+       driver: local

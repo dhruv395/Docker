@@ -1,0 +1,53 @@
+version: '3'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
+    restart: always
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - cluster.name=elk-cluster
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+       soft: -1
+       hard: -1
+    volumes:
+      - elkdata:/usr/share/elasticsearch/data
+      - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9200:9200
+    networks:
+      - elknet
+    logging:
+        driver: "json-file"
+        options:
+             max-file: "5"
+             max-size: "10m"
+
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.8.0
+    restart: always
+    environment:
+      - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+    ports:
+      - 5601:5601
+    networks:
+      - elknet
+    logging:
+         driver: "json-file"
+         options:
+              max-file: "5"
+              max-size: "10m"
+
+  curator:
+    build: .
+    networks:
+      - elknet
+
+volumes:
+  elkdata:
+     driver: local
+networks:
+  elknet:

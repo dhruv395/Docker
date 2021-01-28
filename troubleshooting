@@ -1,0 +1,8 @@
+##to check the file size of docker container
+
+sudo sh -c "du -ch /var/lib/docker/containers/*/*-json.log"
+sudo docker system df
+sudo docker system df -v
+
+## to empty file	
+truncate -s 0 /var/lib/docker/containers/*/*-json.log

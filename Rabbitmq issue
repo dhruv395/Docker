@@ -1,0 +1,5 @@
+If you get connection refused error in rabbitmq container then
+
+sudo docker exec -it rabbitmq bash
+rabbitmq-plugins enable rabbitmq_stomp
+reboot the rabbitmq  container

@@ -1,0 +1,60 @@
+
+The ENTRYPOINT specifies a command that will always be executed when the container starts.
+The CMD specifies arguments that will be fed to the ENTRYPOINT
+ENTRYPOINT can also be overridden using --entrypoint flag.
+ 
+Both CMD and ENTRYPOINT instructions define what command gets executed when running a container. There are few rules that describe their co-operation.
+
+Dockerfile should specify at least one of CMD or ENTRYPOINT commands.
+ENTRYPOINT should be defined when using the container as an executable.
+CMD should be used as a way of defining default arguments for an ENTRYPOINT command or for executing an ad-hoc command in a container.
+CMD will be overridden when running the container with alternative arguments.
+
+example:
+For example, if your Dockerfile is:
+
+FROM debian:wheezy
+ENTRYPOINT ["/bin/ping"]
+CMD ["localhost"]
+
+Running the image without any argument will ping the localhost:
+docker run -it test
+
+Now, running the image with an argument will ping the argument:
+docker run -it test google.com
+
+##CMD
+Docker file
+
+  FROM centos:8.1.1911
+
+  CMD ["echo", "Hello Docker"]
+  
+Run result
+sudo docker run <image-id>
+Hello Docker
+
+
+###ENTRYPOINT
+Docker file
+  FROM centos:8.1.1911
+
+  ENTRYPOINT ["echo", "Hello Docker"]
+
+Run result
+sudo docker run <image-id>
+Hello Docker
+
+##There are many situations in which combining CMD and ENTRYPOINT would be the best solution for your Docker container. In such cases, the executable is defined with ENTRYPOINT, while CMD specifies the default parameter.
+Docker file
+
+  FROM centos:8.1.1911
+
+  ENTRYPOINT ["echo", "Hello"]
+  CMD ["Docker"]
+
+Run result
+sudo docker run <image-id>
+Hello Docker
+$ sudo docker run <image-id> Ben
+Hello Ben

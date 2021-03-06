@@ -1,0 +1,56 @@
+## A text file with instructions to build image
+
+The ENTRYPOINT specifies a command that will always be executed when the container starts.
+The CMD specifies arguments that will be fed to the ENTRYPOINT
+ENTRYPOINT can also be overridden using --entrypoint flag.
+ 
+Both CMD and ENTRYPOINT instructions define what command gets executed when running a container. There are few rules that describe their co-operation.
+
+Dockerfile should specify at least one of CMD or ENTRYPOINT commands.
+ENTRYPOINT should be defined when using the container as an executable.
+CMD should be used as a way of defining default arguments for an ENTRYPOINT command or for executing an ad-hoc command in a container.
+CMD will be overridden when running the container with alternative arguments.
+
+example:
+For example, if your Dockerfile is:
+
+FROM debian:wheezy
+ENTRYPOINT ["/bin/ping"]
+CMD ["localhost"]
+
+
+FROM	ubuntu 					          		   	-> to get a base image
+
+MAINTAINER  dhruv  <dray1@raytech.com>
+
+#Set one or more individual labels			    -> add labels to your image to help organize images by project, 
+									                      		- record licensing information, to aid in automation
+LABEL 	com.example.version="0.0.1-beta"
+LABEL 	vendor1="ACME Incorporated"
+
+RUN apt-get update && apt-get install -y \      -> gets executed during the bulding of the image
+											                        	- builds your application with make	
+										                           -Always combine RUN apt-get update with apt-get install in the same RUN statement
+    package-bar \
+    package-baz \
+    package-foo  \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR							                    		-> WORKDIR command changes default directory, where we run our RUN / CMD / ENTRYPOINT commands
+
+COPY							                    		-> adds files from your Docker client’s current directory
+
+ADD							                    			->  for downloading remote files and extracting archives
+
+CMD	["echo", "Hello world"] 		        	-> specifies what command to run within the container
+CMD ["executable", "param1", "param2"]    -commands gets executed only when you create a container out of the image
+CMD ["apache2","-DFOREGROUND"]      	    -is a default command run after creating container without other command specified.
+
+ENTRYPOINT								-> 
+
+ENV									                  	-> to update the PATH environment variable for the software your container installs
+
+EXPOSE		80  443				            		-> indicates the ports on which a container listens for connections
+
+VOLUME								                	-> should be used to expose any database storage area, configuration storage, 
+										                    - or files/folders created by your docker container
